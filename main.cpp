@@ -9,10 +9,29 @@
 
 using namespace std;
 
+void strange_number()
+{
+cout<<"Strange number, don't you think?\n";
+sleep(1);
+system("cls");
+}
+
+bool check_number(string a)
+{
+    int er=0;
+    for (int i = 0;i<a.length();i++)
+    {
+        if(int(a[i])-48<0||int(a[i])-48>9){er=1;i=a.length();}
+    }
+    if(er)return false;
+    else return true;
+}
+
 int main()
 {
 srand(time(NULL));
-int a,b,c,d,g=0,p;
+int g=0,p;
+int a,b,c,d;
 string w;
 string command ="";
 while(command != "STOP")
@@ -21,18 +40,29 @@ cout<<"1.Multiplying matrix by number \n2.Sum of matrix\n3.Transposition of matr
 cin>>w;
 if(int(w[0])-48==1&&w.size()==1){
 cout<<"Enter the size of matrix\n";
-cin >> a >> b;
+try
+{
+cin >> a;
+if(a<=0)throw "gg";
+cin >> b;
+if(b<=0)throw "gg";
 Matrix<int> A(a,b);
 cout<<"Enter the numbers for matrix\n";
 cin >> A;
 cout<<"Enter the number for multiplying\n";
 int k;cin>>k;
+if(k==0)throw "gg";
 cout<<"Original matrix:\n";
 cout<<A;
 Matrix<int> C = A.umnozh(k);
 cout<<"\nNew matrix:\n";
 cout<<C;
 cout<<endl;
+}
+catch(const char *err)
+{
+    if(err == "gg")cout<<"Strange number :(\n";
+}
 }
 
 
@@ -145,14 +175,16 @@ cout<<"Do you want to continue?\nEnter 'continue'\n";
 string cont = "";
 cin >> cont;
 if(cont == "continue")
-system("clear");
+system("cls");
 else
 {
     cout << "indeed )))\n";
     sleep(1);
-    system("clear");
+    system("cls");
+
 }
 
 }
+
 return 0;
 }
