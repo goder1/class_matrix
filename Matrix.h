@@ -92,6 +92,8 @@ for(int i = 0;i<a;i++)
     }
 return C;
 }
+Matrix<int> A(1,1);
+return A;
 }
 
 Matrix fastPOW(int n){
@@ -161,6 +163,38 @@ Matrix umnozh(T k){
         }
     }
     return C;
+}
+
+int determinant(int a)
+{
+if(a==1)return matrix[0][0];
+else if(a==2)return matrix[0][0]*matrix[1][1]-matrix[1][0]*matrix[0][1];
+else {
+    int k = 1,s = 0;
+    for(int i=0;i<a;i++)
+    {
+        Matrix<int> B(a-1);
+        B.matrix = new int* [a-1];
+        for (int j = 0; j < a-1; j++) B.matrix[j] = new int [a-1];
+        for (int j = 0; j < a-1; j++)
+        {
+        for(int q = 0; q < i; q++)
+        {
+        B.matrix[j][q] = matrix[j+1][q];
+        }
+        for(int q = i; q < a-1; q++)
+        {
+        B.matrix[j][q] = matrix[j+1][q+1];
+        }
+        }
+    s+=matrix[0][i]*B.determinant(a-1)*k;
+    k=-k;
+
+    }
+    return s;
+
+
+}
 }
 
 template<typename Type> friend istream& operator>>(istream&, Matrix<Type>&);

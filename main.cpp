@@ -36,7 +36,7 @@ string w;
 string command ="";
 while(command != "STOP")
 {
-cout<<"1.Multiplying matrix by number \n2.Sum of matrix\n3.Transposition of matrix\n4.Multiplying matrices\n5.Matrix's degree\n6.STOP\n\n Choose the command:\n";
+cout<<"1.Multiplying matrix by number \n2.Sum of matrix\n3.Transposition of matrix\n4.Multiplying matrices\n5.Matrix degree\n6.Matrix determinant\n7.STOP\n\n Choose the command:\n";
 cin>>w;
 if(int(w[0])-48==1&&w.size()==1){
 cout<<"Enter the size of matrix\n";
@@ -162,6 +162,26 @@ else cout<<"This matrix could not be multiplied by itself :/";
 
 else if(int(w[0])-48==6&&w.size()==1)
 {
+cout<<"Enter the size of matrix\n";
+cin >> a;
+Matrix<int> A;
+A.set_a(a);
+A.set_b(a);
+cout<<"Enter the numbers for the matrix\n";
+cin >> A;
+cout<<"Matrix:\n"<<A;
+
+cout<<"determinant:\n";
+int det=0;
+
+det = A.determinant(a);
+cout<<det<<endl;
+}
+
+
+
+else if(int(w[0])-48==7&&w.size()==1)
+{
     command = "STOP";
     return 0;
 }
@@ -175,12 +195,12 @@ cout<<"Do you want to continue?\nEnter 'continue'\n";
 string cont = "";
 cin >> cont;
 if(cont == "continue")
-system("cls");
+system("clear");
 else
 {
     cout << "indeed )))\n";
     sleep(1);
-    system("cls");
+    system("clear");
 
 }
 
