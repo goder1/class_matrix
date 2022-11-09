@@ -249,7 +249,7 @@ public:
             int k = 1,s = 0;
             for(int i = 0; i < a; i++)
             {
-                Matrix<int> B(a-1);
+                Matrix<T> B(a-1);
                 for (int j = 0; j < a-1; j++)
                 {
                 for(int q = 0; q < i; q++)
@@ -287,8 +287,7 @@ public:
 
     Matrix reverse_matrix()
     {
-        Matrix<float> B = E_matrix(a);
-        cout<<B<<endl;
+        Matrix<T> B = E_matrix(a);
         Matrix<T> C;
         C.a = a;
         C.b = b;

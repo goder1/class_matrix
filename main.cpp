@@ -203,10 +203,14 @@ int main()
             cout << "Enter the free terms\n";
             Matrix<float> B(a,1);
             cin >> B;
-            A = A.reverse_matrix();
-            A = A * B;
-            cout << "Values of unknowns:\n";
-            cout << A;
+            if(A.determinant(a) != 0)
+            {
+                A = A.reverse_matrix();
+                A = A * B;
+                cout << "Values of unknowns:\n";
+                cout << A;
+            }
+            else cout << "Degenerate\n\n";
         }
 
         else if(int(w[0]) - 48 == 9 && w.size() == 1)
