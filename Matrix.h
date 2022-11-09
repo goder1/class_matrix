@@ -287,15 +287,11 @@ public:
 
     Matrix reverse_matrix()
     {
-        //cout<<1;
-        //cout<<E_matrix(a)<<endl;
         Matrix<float> B = E_matrix(a);
         cout<<B<<endl;
-        //cout<<B<<endl;
         Matrix<T> C;
         C.a = a;
         C.b = b;
-        //C.matrix = matrix;
         C.matrix = new T* [a];
         for(int i = 0; i < a; i++)
         {
@@ -308,141 +304,118 @@ public:
             C.matrix[i][j] = matrix[i][j];
         }
 
-        if(C.determinant(a) != 0){
-
-        for(int i = 0; i < a; i++)
+        if(C.determinant(a) != 0)
         {
-            for(int j = 0; j < a; j++)
+            for(int i = 0; i < a; i++)
             {
-
-                //making not 0 numbers on the main diagonal
-                if(i == j && matrix[i][j] == 0)
-                {
-                    int no_way = 0;
-                    for(int q = 0; q < a; q++)
-                    {
-                        if(matrix[q][j] != 0 && matrix[i][q] != 0)
-                        {
-                            for (int p = 0; p < a; p++)
-                            {
-                                swap(matrix[q][p], matrix[i][p]);
-                            }
-                            for (int p = 0; p < a; p++)
-                            {
-                                swap(B.matrix[q][p], B.matrix[i][p]);
-                            }
-                            no_way = 1;
-                        }
-                    }
-                    if(no_way == 0)
-                    {
-                        return E_matrix(0);
-                    }
-                }
-            }
-        }
-        for(int j = 0; j < a; j++)
-        {
-            for(int i = j; i < a; i++)
-            {
-                if(i != j && matrix[i][j] != 0)
-                {
-                    for(int q = 0; q < a; q++)
-                    {
-                        if(matrix[q][j] != 0 && q != i && q >= j)
-                        {
-                            for(int k = 0; k < a; k++)
-                            {
-                                if (k!= j)
-                                {
-                                matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
-                                }
-                                B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
-                            }
-                            matrix[i][j] = 0;
-
-                            cout<<"cHanging:\n";
-                            for(int d = 0; d < a ; d++)
-                            {
-                                for(int g = 0; g < a; g++)
-                                {
-                                    cout<<matrix[d][g]<<" ";
-                                }
-                                cout<<endl;
-                            }
-                            cout<<endl<<"result:\n"<<B<<endl;
-                        }
-                    }
-                }
-            }
-            for(int k = 0; k < a; k++)
-            {
-                for(int d = 0; d < a; d++)
+                for(int j = 0; j < a; j++)
                 {
                     //making not 0 numbers on the main diagonal
-                    if(k == d && matrix[k][d] == 0)
+                    if(i == j && matrix[i][j] == 0)
                     {
                         int no_way = 0;
                         for(int q = 0; q < a; q++)
                         {
-                            if(matrix[q][d] != 0 && matrix[k][q] != 0)
+                            if(matrix[q][j] != 0 && matrix[i][q] != 0)
                             {
                                 for (int p = 0; p < a; p++)
                                 {
-                                    swap(matrix[q][p], matrix[k][p]);
+                                    swap(matrix[q][p], matrix[i][p]);
                                 }
                                 for (int p = 0; p < a; p++)
                                 {
-                                    swap(B.matrix[q][p], B.matrix[k][p]);
+                                    swap(B.matrix[q][p], B.matrix[i][p]);
                                 }
+                                no_way = 1;
+                            }
+                        }
+                        if(no_way == 0)
+                        {
+                            return E_matrix(0);
+                        }
+                    }
+                }
+            }
+            for(int j = 0; j < a; j++)
+            {
+                for(int i = j; i < a; i++)
+                {
+                    if(i != j && matrix[i][j] != 0)
+                    {
+                        for(int q = 0; q < a; q++)
+                        {
+                            if(matrix[q][j] != 0 && q != i && q >= j)
+                            {
+                                for(int k = 0; k < a; k++)
+                                {
+                                    if (k!= j)
+                                    {
+                                        matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
+                                    }
+                                    B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
+                                }
+                                matrix[i][j] = 0;
                             }
                         }
                     }
                 }
-
-            }
-        }
-        for(int i = 0; i < a; i++)
-        {
-            for(int j = i; j < a; j++)
-            {
-                if(i != j && matrix[i][j] != 0)
+                for(int k = 0; k < a; k++)
                 {
-                    for(int q = 0; q < a; q++)
+                    for(int d = 0; d < a; d++)
                     {
-                        if(matrix[q][j] != 0 && q != i && q >= j)
+                        //making not 0 numbers on the main diagonal
+                        if(k == d && matrix[k][d] == 0)
                         {
-                            for(int k = 0; k < a; k++)
+                            int no_way = 0;
+                            for(int q = 0; q < a; q++)
                             {
-                                if (k!= j)
+                                if(matrix[q][d] != 0 && matrix[k][q] != 0)
                                 {
-                                matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
-                                }
-                                B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
-                            }
-                            matrix[i][j] = 0;
-
-                            cout<<"cHanging:\n";
-                            for(int d = 0; d < a ; d++)
-                            {
-                                for(int g = 0; g < a; g++)
-                                {
-                                    cout<<matrix[d][g]<<" ";
-                                }
-                                cout<<endl;
-                            }
-                            cout<<endl<<"result:\n"<<B<<endl;
-
-                            for(int d = 0; d < a ; d++)
-                            {
-                                for(int g = 0; g < a; g++)
-                                {
-                                    if(abs(matrix[d][g])>=10000000000000000000)
+                                    for (int p = 0; p < a; p++)
                                     {
-                                        for(int e = 0; e < a; e++)
+                                        swap(matrix[q][p], matrix[k][p]);
+                                    }
+                                    for (int p = 0; p < a; p++)
+                                    {
+                                        swap(B.matrix[q][p], B.matrix[k][p]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+            for(int i = 0; i < a; i++)
+            {
+                for(int j = i; j < a; j++)
+                {
+                    if(i != j && matrix[i][j] != 0)
+                    {
+                        for(int q = 0; q < a; q++)
+                        {
+                            if(matrix[q][j] != 0 && q != i && q >= j)
+                            {
+                                for(int k = 0; k < a; k++)
+                                {
+                                    if (k!= j)
+                                    {
+                                        matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
+                                    }
+                                    B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
+                                }
+                                matrix[i][j] = 0;
+                                for(int d = 0; d < a ; d++)
+                                {
+                                    for(int g = 0; g < a; g++)
+                                    {
+                                        if(abs(matrix[d][g])>=10000000000000000000)
                                         {
-                                            matrix[d][e]/=10000000000000000000;
-                                            B.matrix[d][e]/=10000000000000000000;
+                                            for(int e = 0; e < a; e++)
+                                            {
+                                                matrix[d][e]/=10000000000000000000;
+                                                B.matrix[d][e]/=10000000000000000000;
+                                            }
                                         }
                                     }
                                 }
@@ -450,53 +423,40 @@ public:
                         }
                     }
                 }
-            }
-            for(int k = 0; k < a; k++)
-            {
-                for(int d = 0; d < a; d++)
+                for(int k = 0; k < a; k++)
                 {
-
-                    //making not 0 numbers on the main diagonal
-                    if(k == d && matrix[k][d] == 0)
+                    for(int d = 0; d < a; d++)
                     {
-                        int no_way = 0;
-                        for(int q = 0; q < a; q++)
+                        //making not 0 numbers on the main diagonal
+                        if(k == d && matrix[k][d] == 0)
                         {
-                            if(matrix[q][d] != 0 && matrix[k][q] != 0)
+                            int no_way = 0;
+                            for(int q = 0; q < a; q++)
                             {
-                                for (int p = 0; p < a; p++)
+                                if(matrix[q][d] != 0 && matrix[k][q] != 0)
                                 {
-                                    swap(matrix[q][p], matrix[k][p]);
-                                }
-                                for (int p = 0; p < a; p++)
-                                {
-                                    swap(B.matrix[q][p], B.matrix[k][p]);
+                                    for (int p = 0; p < a; p++)
+                                    {
+                                        swap(matrix[q][p], matrix[k][p]);
+                                    }
+                                    for (int p = 0; p < a; p++)
+                                    {
+                                        swap(B.matrix[q][p], B.matrix[k][p]);
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-        for(int i = 0; i < a; i++)
-        {
-            for(int j = 0; j < a; j++)
+            for(int i = 0; i < a; i++)
             {
-                B.matrix[i][j]/=matrix[i][i];
+                for(int j = 0; j < a; j++)
+                {
+                    B.matrix[i][j]/=matrix[i][i];
+                }
             }
         }
-        cout<<"cHanging:\n";
-        for(int d = 0; d < a ; d++)
-        {
-            for(int g = 0; g < a; g++)
-            {
-                cout<<matrix[d][g]<<" ";
-            }
-            cout<<endl;
-        }
-        cout<<endl<<"result:\n"<<B<<endl;
-        }
-       // cout << B << endl;
         return B;
     }
 

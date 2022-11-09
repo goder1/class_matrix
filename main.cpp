@@ -35,7 +35,7 @@ int main()
     string command = "";
     while(command != "STOP")
     {
-        cout << "1.Multiplying matrix by number \n2.Sum of matrix\n3.Transposition of matrix\n4.Multiplying matrices\n5.Matrix degree\n6.Matrix determinant\n7.Matrix reverse(test)\n8.STOP\n\n Choose the command:\n";
+        cout << "1.Multiplying matrix by number \n2.Sum of matrix\n3.Transposition of matrix\n4.Multiplying matrices\n5.Matrix degree\n6.Matrix determinant\n7.Matrix reverse(test)\n8.Solving equations (n equations and n unknowns)\n9.STOP\n\n Choose the command:\n";
         cin >> w;
         if(int(w[0]) - 48 == 1 && w.size() == 1)
         {
@@ -189,14 +189,27 @@ int main()
             cout << "Matrix:\n" << A;
             cout << "Reversed Matrix:\n";
             Matrix<float> B;
-            //cout<<1;
             B = A.reverse_matrix();
-            //cout<<1;
-            //Matrix<char> B = A.E_matrix(a);
             cout << B;
         }
 
         else if(int(w[0]) - 48 == 8 && w.size() == 1)
+        {
+            cout << "Enter the amount of equations\n";
+            cin >> a;
+            Matrix<float> A(a);
+            cout << "Enter the coefficients of the equations\n";
+            cin >> A;
+            cout << "Enter the free terms\n";
+            Matrix<float> B(a,1);
+            cin >> B;
+            A = A.reverse_matrix();
+            A = A * B;
+            cout << "Values of unknowns:\n";
+            cout << A;
+        }
+
+        else if(int(w[0]) - 48 == 9 && w.size() == 1)
         {
             command = "STOP";
             return 0;
