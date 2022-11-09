@@ -13,7 +13,7 @@ void strange_number()
 {
 cout << "Strange number, don't you think?\n";
 sleep(1);
-system("cls");
+system("clear");
 }
 
 bool check_number(string a)
@@ -35,7 +35,7 @@ int main()
     string command = "";
     while(command != "STOP")
     {
-        cout << "1.Multiplying matrix by number \n2.Sum of matrix\n3.Transposition of matrix\n4.Multiplying matrices\n5.Matrix degree\n6.Matrix determinant\n7.STOP\n\n Choose the command:\n";
+        cout << "1.Multiplying matrix by number \n2.Sum of matrix\n3.Transposition of matrix\n4.Multiplying matrices\n5.Matrix degree\n6.Matrix determinant\n7.Matrix reverse(test)\n8.STOP\n\n Choose the command:\n";
         cin >> w;
         if(int(w[0]) - 48 == 1 && w.size() == 1)
         {
@@ -177,8 +177,26 @@ int main()
             cout << det << endl;
         }
 
-
         else if(int(w[0]) - 48 == 7 && w.size() == 1)
+        {
+            cout << "Enter the size of matrix (only one number)\n";
+            cin >> a;
+            Matrix<float> A;
+            A.set_a(a);
+            A.set_b(a);
+            cout << "Enter the numbers for the matrix\n";
+            cin >> A;
+            cout << "Matrix:\n" << A;
+            cout << "Reversed Matrix:\n";
+            Matrix<float> B;
+            //cout<<1;
+            B = A.reverse_matrix();
+            //cout<<1;
+            //Matrix<char> B = A.E_matrix(a);
+            cout << B;
+        }
+
+        else if(int(w[0]) - 48 == 8 && w.size() == 1)
         {
             command = "STOP";
             return 0;
@@ -192,12 +210,12 @@ int main()
         cout << "Do you want to continue?\nEnter 'continue'\n";
         string cont = "";
         cin >> cont;
-        if(cont == "continue")system("cls");
+        if(cont == "continue")system("clear");
         else
         {
             cout << "indeed )))\n";
             sleep(1);
-            system("cls");
+            system("clear");
         }
     }
     return 0;

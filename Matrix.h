@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <ctime>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 template<typename T>
@@ -34,39 +35,64 @@ public:
         this->b = b;
     }
 
+    T get_elem(int i, int j)
+    {
+        return matrix[i][j];
+    }
+
+    void set_elem(T elem, int i, int j)
+    {
+        matrix[i][j] = elem;
+    }
+
     Matrix()
     {
         a = 0;b = 0;
+        matrix = new T* [a];
+        for (int j = 0; j < a; j++)
+        {
+        matrix[j] = new T [a];
+        }
     }
 
     Matrix(int x)
     {
         a = x; b = x;
+        matrix = new T* [a];
+        for (int j = 0; j < a; j++)
+        {
+        matrix[j] = new T [a];
+        }
     }
 
     Matrix(int x, int y)
     {
         a = x; b = y;
+        matrix = new T* [a];
+        for (int j = 0; j < a; j++)
+        {
+        matrix[j] = new T [b];
+        }
     }
 
-    Matrix E_matrix(int a, int b)
+    Matrix E_matrix(int a)
     {
-        Matrix A;
+        Matrix<T> A;
         A.matrix = new T* [a];
         for(int i = 0; i < a; i++)
         {
-            A.matrix[i] = new T [b];
+            A.matrix[i] = new T [a];
         }
         for(int i = 0 ; i < a; i++)
         {
-            for(int j = 0; j < b; j++)
+            for(int j = 0; j < a; j++)
             {
                 if(i == j)A.matrix[i][j] = 1;
                 else A.matrix[i][j] = 0;
             }
         }
         A.a = a;
-        A.b = b;
+        A.b = a;
         return A;
     }
 
@@ -102,7 +128,7 @@ public:
 
     Matrix fastPOW(int n)
     {
-        if(n == 0)return E_matrix(a,b);
+        if(n == 0)return E_matrix(a);
         else if(n%2 == 0)
         {
             Matrix C;
@@ -224,20 +250,17 @@ public:
             for(int i = 0; i < a; i++)
             {
                 Matrix<int> B(a-1);
-                B.matrix = new int* [a-1];
-                for (int j = 0; j < a-1; j++)
-                {
-                    B.matrix[j] = new int [a-1];
-                }
                 for (int j = 0; j < a-1; j++)
                 {
                 for(int q = 0; q < i; q++)
                 {
-                    B.matrix[j][q] = matrix[j+1][q];
+                    //B.matrix[j][q] = matrix[j+1][q];
+                    B.set_elem(matrix[j+1][q],j,q);
                 }
                 for(int q = i; q < a-1; q++)
                 {
-                    B.matrix[j][q] = matrix[j+1][q+1];
+                    //B.matrix[j][q] = matrix[j+1][q+1];
+                    B.set_elem(matrix[j+1][q+1],j,q);
                 }
                 }
                 s += matrix[0][i] * B.determinant(a-1) * k;
@@ -247,12 +270,270 @@ public:
         }
     }
 
+    void swap_lines(int x, int y)
+    {
+        for (int i = 0; i < a; i++)
+        {
+            swap(matrix[x][i], matrix[y][i]);
+        }
+    }
+    void swap_colummns(int x, int y)
+    {
+        for (int i = 0; i < a; i++)
+        {
+            swap(matrix[i][x], matrix[i][y]);
+        }
+    }
+
+    Matrix reverse_matrix()
+    {
+        //cout<<1;
+        //cout<<E_matrix(a)<<endl;
+        Matrix<float> B = E_matrix(a);
+        cout<<B<<endl;
+        //cout<<B<<endl;
+        Matrix<T> C;
+        C.a = a;
+        C.b = b;
+        //C.matrix = matrix;
+        C.matrix = new T* [a];
+        for(int i = 0; i < a; i++)
+        {
+            C.matrix[i] = new T [b];
+        }
+
+        for(int i = 0; i < a; i++)
+        {
+            for(int j = 0; j < b; j++)
+            C.matrix[i][j] = matrix[i][j];
+        }
+
+        if(C.determinant(a) != 0){
+
+        for(int i = 0; i < a; i++)
+        {
+            for(int j = 0; j < a; j++)
+            {
+
+                //making not 0 numbers on the main diagonal
+                if(i == j && matrix[i][j] == 0)
+                {
+                    int no_way = 0;
+                    for(int q = 0; q < a; q++)
+                    {
+                        if(matrix[q][j] != 0 && matrix[i][q] != 0)
+                        {
+                            for (int p = 0; p < a; p++)
+                            {
+                                swap(matrix[q][p], matrix[i][p]);
+                            }
+                            for (int p = 0; p < a; p++)
+                            {
+                                swap(B.matrix[q][p], B.matrix[i][p]);
+                            }
+                            no_way = 1;
+                        }
+                    }
+                    if(no_way == 0)
+                    {
+                        return E_matrix(0);
+                    }
+                }
+            }
+        }
+        for(int j = 0; j < a; j++)
+        {
+            for(int i = j; i < a; i++)
+            {
+                if(i != j && matrix[i][j] != 0)
+                {
+                    for(int q = 0; q < a; q++)
+                    {
+                        if(matrix[q][j] != 0 && q != i && q >= j)
+                        {
+                            for(int k = 0; k < a; k++)
+                            {
+                                if (k!= j)
+                                {
+                                matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
+                                }
+                                B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
+                            }
+                            matrix[i][j] = 0;
+
+                            cout<<"cHanging:\n";
+                            for(int d = 0; d < a ; d++)
+                            {
+                                for(int g = 0; g < a; g++)
+                                {
+                                    cout<<matrix[d][g]<<" ";
+                                }
+                                cout<<endl;
+                            }
+                            cout<<endl<<"result:\n"<<B<<endl;
+                        }
+                    }
+                }
+            }
+            for(int k = 0; k < a; k++)
+            {
+                for(int d = 0; d < a; d++)
+                {
+                    //making not 0 numbers on the main diagonal
+                    if(k == d && matrix[k][d] == 0)
+                    {
+                        int no_way = 0;
+                        for(int q = 0; q < a; q++)
+                        {
+                            if(matrix[q][d] != 0 && matrix[k][q] != 0)
+                            {
+                                for (int p = 0; p < a; p++)
+                                {
+                                    swap(matrix[q][p], matrix[k][p]);
+                                }
+                                for (int p = 0; p < a; p++)
+                                {
+                                    swap(B.matrix[q][p], B.matrix[k][p]);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        for(int i = 0; i < a; i++)
+        {
+            for(int j = i; j < a; j++)
+            {
+                if(i != j && matrix[i][j] != 0)
+                {
+                    for(int q = 0; q < a; q++)
+                    {
+                        if(matrix[q][j] != 0 && q != i && q >= j)
+                        {
+                            for(int k = 0; k < a; k++)
+                            {
+                                if (k!= j)
+                                {
+                                matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
+                                }
+                                B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
+                            }
+                            matrix[i][j] = 0;
+
+                            cout<<"cHanging:\n";
+                            for(int d = 0; d < a ; d++)
+                            {
+                                for(int g = 0; g < a; g++)
+                                {
+                                    cout<<matrix[d][g]<<" ";
+                                }
+                                cout<<endl;
+                            }
+                            cout<<endl<<"result:\n"<<B<<endl;
+
+                            for(int d = 0; d < a ; d++)
+                            {
+                                for(int g = 0; g < a; g++)
+                                {
+                                    if(abs(matrix[d][g])>=10000000000000000000)
+                                    {
+                                        for(int e = 0; e < a; e++)
+                                        {
+                                            matrix[d][e]/=10000000000000000000;
+                                            B.matrix[d][e]/=10000000000000000000;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for(int k = 0; k < a; k++)
+            {
+                for(int d = 0; d < a; d++)
+                {
+
+                    //making not 0 numbers on the main diagonal
+                    if(k == d && matrix[k][d] == 0)
+                    {
+                        int no_way = 0;
+                        for(int q = 0; q < a; q++)
+                        {
+                            if(matrix[q][d] != 0 && matrix[k][q] != 0)
+                            {
+                                for (int p = 0; p < a; p++)
+                                {
+                                    swap(matrix[q][p], matrix[k][p]);
+                                }
+                                for (int p = 0; p < a; p++)
+                                {
+                                    swap(B.matrix[q][p], B.matrix[k][p]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < a; i++)
+        {
+            for(int j = 0; j < a; j++)
+            {
+                B.matrix[i][j]/=matrix[i][i];
+            }
+        }
+        cout<<"cHanging:\n";
+        for(int d = 0; d < a ; d++)
+        {
+            for(int g = 0; g < a; g++)
+            {
+                cout<<matrix[d][g]<<" ";
+            }
+            cout<<endl;
+        }
+        cout<<endl<<"result:\n"<<B<<endl;
+        }
+       // cout << B << endl;
+        return B;
+    }
+
     template<typename Type> friend istream& operator>>(istream&, Matrix<Type>&);
     template<typename Type> friend ostream& operator<<(ostream&, const Matrix<Type>&);
 
     T* operator[](int a)
     {
         return matrix[a];
+    }
+
+
+    ~Matrix()
+    {
+        for(int i = 0; i < a; i++)
+        {
+            delete[] matrix[i];
+        }
+        delete[] matrix;
+    }
+
+    Matrix(const Matrix & A)
+    {
+        a = A.a;
+        b = A.b;
+        matrix = new T* [a];
+        for(int i = 0; i < a; i++)
+        {
+            matrix[i] = new T [b];
+        }
+        for(int i = 0; i < a; i++)
+        {
+            for(int j = 0; j < b; j++)
+            {
+                matrix[i][j] = A.matrix[i][j];
+            }
+        }
     }
 
 
@@ -290,3 +571,4 @@ istream& operator>>(istream& in, Matrix<T>& A) {
 }
 
 #endif
+
