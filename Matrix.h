@@ -194,9 +194,7 @@ public:
 
     Matrix operator+(Matrix B)
     {
-        Matrix C;
-        C.a = a;
-        C.b = b;
+        Matrix C(a,b);
         C.matrix = new T* [C.a];
         for(int i = 0; i < C.a ; i++)
         {
@@ -214,10 +212,7 @@ public:
 
     Matrix operator*(T k)
     {
-        Matrix C;
-        C.a = a;
-        C.b = b;
-        //C.matrix = matrix;
+        Matrix C(a,b);
         C.matrix = new T* [a];
         for(int i = 0; i < a; i++)
         {
@@ -238,6 +233,24 @@ public:
             }
         }
         return C;
+    }
+
+    void operator=(Matrix<T> A)
+    {
+        a = A.a;
+        b = A.b;
+        matrix = new T* [a];
+        for (int j = 0; j < a; j++)
+        {
+        matrix[j] = new T [b];
+        }
+        for(int i = 0; i < a; i++)
+        {
+            for(int j = 0; j < b; j++)
+            {
+                matrix[i][j] = A.matrix[i][j];
+            }
+        }
     }
 
     int determinant(int a)

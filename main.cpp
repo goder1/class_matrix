@@ -52,10 +52,11 @@ int main()
                 cout << "Enter the number for multiplying\n";
                 int k;
                 cin >> k;
-                if(k==0)throw "gg";
+                if(k == 0)throw "gg";
                 cout << "Original matrix:\n";
                 cout << A;
-                Matrix<int> C = A * k;
+                Matrix<int> C(a,b);
+                C = A * k;
                 cout << "\nNew matrix:\n";
                 cout << C;
                 cout << endl;
@@ -67,7 +68,7 @@ int main()
         }
 
 
-        else if(int(w[0])-48==2&&w.size()==1)
+        else if(int(w[0]) - 48 == 2 && w.size() == 1)
         {
 
             cout << "Enter the size of matrices\n";
@@ -91,9 +92,7 @@ int main()
         {
             cout << "Enter the size of matrix\n";
             cin >> a >> b;
-            Matrix<int> A;
-            A.set_a(a);
-            A.set_b(b);
+            Matrix<int> A(a,b);
             cout << "Enter the numbers for the matrix\n";
             cin >> A;
             cout << "Original matrix:\n";
@@ -107,17 +106,13 @@ int main()
         {
             cout << "Enter the size of the first matrix\n";
             cin >> a >> b;
-            Matrix<int> A;
-            A.set_a(a);
-            A.set_b(b);
+            Matrix<int> A(a,b);
             cout << "Enter the numbers for the first matrix\n";
             cin >> A;
             cout << "Enter the size of the second matrix\n";
             cin >> c >> d;
 
-            Matrix<int> B;
-            B.set_a(c);
-            B.set_b(d);
+            Matrix<int> B(c,d);
             cout << "Enter the numbers for the second matrix\n";
             cin >> B;
             cout << "Original matrices:\n\n";
@@ -137,14 +132,11 @@ int main()
 
         }
 
-
         else if(int(w[0]) - 48 == 5 && w.size() == 1)
         {
             cout << "Enter the size of matrix\n";
             cin >> a >> b;
-            Matrix<int> A;
-            A.set_a(a);
-            A.set_b(b);
+            Matrix<int> A(a,b);
             cout << "Enter the numbers for the matrix\n";
             cin >> A;
             if(a == b)
@@ -152,7 +144,7 @@ int main()
                 cout << "Enter the degree of matrix\n";
                 int n;
                 cin >> n;
-                Matrix<int> B;
+                Matrix<int> B(a,b);
                 B = A.fastPOW(n);
                 cout << "Original matrix:\n" << A;
                 cout << "Matrix in " << n << " degree:\n";
@@ -165,9 +157,7 @@ int main()
         {
             cout << "Enter the size of matrix (only one number)\n";
             cin >> a;
-            Matrix<int> A;
-            A.set_a(a);
-            A.set_b(a);
+            Matrix<int> A(a);
             cout << "Enter the numbers for the matrix\n";
             cin >> A;
             cout << "Matrix:\n" << A;
@@ -181,14 +171,12 @@ int main()
         {
             cout << "Enter the size of matrix (only one number)\n";
             cin >> a;
-            Matrix<float> A;
-            A.set_a(a);
-            A.set_b(a);
+            Matrix<float> A(a);
             cout << "Enter the numbers for the matrix\n";
             cin >> A;
             cout << "Matrix:\n" << A;
             cout << "Reversed Matrix:\n";
-            Matrix<float> B;
+            Matrix<float> B(a);
             B = A.reverse_matrix();
             cout << B;
         }
