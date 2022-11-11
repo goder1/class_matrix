@@ -301,15 +301,7 @@ public:
     Matrix reverse_matrix()
     {
         Matrix<T> B = E_matrix(a);
-        Matrix<T> C;
-        C.a = a;
-        C.b = b;
-        C.matrix = new T* [a];
-        for(int i = 0; i < a; i++)
-        {
-            C.matrix[i] = new T [b];
-        }
-
+        Matrix<T> C(a,b);
         for(int i = 0; i < a; i++)
         {
             for(int j = 0; j < b; j++)
