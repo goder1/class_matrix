@@ -185,7 +185,7 @@ int main()
         {
             cout << "Enter the amount of equations\n";
             cin >> a;
-            Matrix<float> A(a);
+            Matrix<float> A(a),C(a);
             cout << "Enter the coefficients of the equations\n";
             cin >> A;
             cout << "Enter the free terms\n";
@@ -193,19 +193,39 @@ int main()
             cin >> B;
             if(A.determinant(a) != 0)
             {
-                A = A.reverse_matrix();
-                A = A * B;
+                C = A.reverse_matrix();
+                C = C * B;
                 cout << "Values of unknowns:\n";
-                cout << A;
+                cout << C;
             }
             else cout << "Degenerate\n\n";
         }
 
         else if(int(w[0]) - 48 == 9 && w.size() == 1)
         {
+            /*
+            cout << "Enter the amount of equations\n";
+            cin >> a;
+            Matrix<float> A(a);
+            cout << "Enter the coefficients of the equations with free terms\n";
+            cin >> A;
+            if(A.determinant(a) != 0)
+            {
+                A.solve_equations();
+                //cout << "Values of unknowns:\n";
+               // cout << A;
+            }
+            else cout << "System is inconsistent\n";
+            */
             command = "STOP";
             return 0;
         }
+
+        /*else if(int(w[0]) - 48 == 1 && int(w[1]) - 48 == 0 && w.size() == 2)
+        {
+            command = "STOP";
+            return 0;
+        }*/
 
 
         else

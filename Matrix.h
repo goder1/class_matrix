@@ -323,16 +323,16 @@ public:
                 for(int j = 0; j < a; j++)
                 {
                     //making not 0 numbers on the main diagonal
-                    if(i == j && matrix[i][j] == 0)
+                    if(i == j && C.matrix[i][j] == 0)
                     {
                         int no_way = 0;
                         for(int q = 0; q < a; q++)
                         {
-                            if(matrix[q][j] != 0 && matrix[i][q] != 0)
+                            if(C.matrix[q][j] != 0 && C.matrix[i][q] != 0)
                             {
                                 for (int p = 0; p < a; p++)
                                 {
-                                    swap(matrix[q][p], matrix[i][p]);
+                                    swap(C.matrix[q][p], C.matrix[i][p]);
                                 }
                                 for (int p = 0; p < a; p++)
                                 {
@@ -352,21 +352,21 @@ public:
             {
                 for(int i = j; i < a; i++)
                 {
-                    if(i != j && matrix[i][j] != 0)
+                    if(i != j && C.matrix[i][j] != 0)
                     {
                         for(int q = 0; q < a; q++)
                         {
-                            if(matrix[q][j] != 0 && q != i && q >= j)
+                            if(C.matrix[q][j] != 0 && q != i && q >= j)
                             {
                                 for(int k = 0; k < a; k++)
                                 {
                                     if (k!= j)
                                     {
-                                        matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
+                                        C.matrix[i][k] = C.matrix[i][k] * C.matrix[q][j] - C.matrix[q][k] * C.matrix[i][j];
                                     }
-                                    B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
+                                    B.matrix[i][k] = B.matrix[i][k] * C.matrix[q][j] - B.matrix[q][k] * C.matrix[i][j];
                                 }
-                                matrix[i][j] = 0;
+                                C.matrix[i][j] = 0;
                             }
                         }
                     }
@@ -376,16 +376,16 @@ public:
                     for(int d = 0; d < a; d++)
                     {
                         //making not 0 numbers on the main diagonal
-                        if(k == d && matrix[k][d] == 0)
+                        if(k == d && C.matrix[k][d] == 0)
                         {
                             int no_way = 0;
                             for(int q = 0; q < a; q++)
                             {
-                                if(matrix[q][d] != 0 && matrix[k][q] != 0)
+                                if(C.matrix[q][d] != 0 && C.matrix[k][q] != 0)
                                 {
                                     for (int p = 0; p < a; p++)
                                     {
-                                        swap(matrix[q][p], matrix[k][p]);
+                                        swap(C.matrix[q][p], C.matrix[k][p]);
                                     }
                                     for (int p = 0; p < a; p++)
                                     {
@@ -395,37 +395,36 @@ public:
                             }
                         }
                     }
-
                 }
             }
             for(int i = 0; i < a; i++)
             {
                 for(int j = i; j < a; j++)
                 {
-                    if(i != j && matrix[i][j] != 0)
+                    if(i != j && C.matrix[i][j] != 0)
                     {
                         for(int q = 0; q < a; q++)
                         {
-                            if(matrix[q][j] != 0 && q != i && q >= j)
+                            if(C.matrix[q][j] != 0 && q != i && q >= j)
                             {
                                 for(int k = 0; k < a; k++)
                                 {
                                     if (k!= j)
                                     {
-                                        matrix[i][k] = matrix[i][k] * matrix[q][j] - matrix[q][k] * matrix[i][j];
+                                        C.matrix[i][k] = C.matrix[i][k] * C.matrix[q][j] - C.matrix[q][k] * C.matrix[i][j];
                                     }
-                                    B.matrix[i][k] = B.matrix[i][k] * matrix[q][j] - B.matrix[q][k] * matrix[i][j];
+                                    B.matrix[i][k] = B.matrix[i][k] * C.matrix[q][j] - B.matrix[q][k] * C.matrix[i][j];
                                 }
-                                matrix[i][j] = 0;
+                                C.matrix[i][j] = 0;
                                 for(int d = 0; d < a ; d++)
                                 {
                                     for(int g = 0; g < a; g++)
                                     {
-                                        if(abs(matrix[d][g])>=10000000000000000000)
+                                        if(abs(C.matrix[d][g])>=10000000000000000000)
                                         {
                                             for(int e = 0; e < a; e++)
                                             {
-                                                matrix[d][e]/=10000000000000000000;
+                                                C.matrix[d][e]/=10000000000000000000;
                                                 B.matrix[d][e]/=10000000000000000000;
                                             }
                                         }
@@ -440,16 +439,16 @@ public:
                     for(int d = 0; d < a; d++)
                     {
                         //making not 0 numbers on the main diagonal
-                        if(k == d && matrix[k][d] == 0)
+                        if(k == d && C.matrix[k][d] == 0)
                         {
                             int no_way = 0;
                             for(int q = 0; q < a; q++)
                             {
-                                if(matrix[q][d] != 0 && matrix[k][q] != 0)
+                                if(C.matrix[q][d] != 0 && C.matrix[k][q] != 0)
                                 {
                                     for (int p = 0; p < a; p++)
                                     {
-                                        swap(matrix[q][p], matrix[k][p]);
+                                        swap(C.matrix[q][p], C.matrix[k][p]);
                                     }
                                     for (int p = 0; p < a; p++)
                                     {
@@ -465,12 +464,17 @@ public:
             {
                 for(int j = 0; j < a; j++)
                 {
-                    B.matrix[i][j]/=matrix[i][i];
+                    B.matrix[i][j]/=C.matrix[i][i];
                 }
             }
         }
         return B;
     }
+
+    /*void solve_equations()
+    {
+
+    }*/
 
     template<typename Type> friend istream& operator>>(istream&, Matrix<Type>&);
     template<typename Type> friend ostream& operator<<(ostream&, const Matrix<Type>&);
@@ -543,4 +547,3 @@ istream& operator>>(istream& in, Matrix<T>& A) {
 }
 
 #endif
-
